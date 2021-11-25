@@ -1,7 +1,7 @@
 const express = require('express');
 require('dotenv').config();
-// Слушаем 3000 порт
-const { PORT = 3000 } = process.env;
+// Слушаем 3001 порт
+const { PORT = 3001 } = process.env;
 const { errors } = require('celebrate');
 
 console.log(process.env.NODE_ENV);
@@ -23,10 +23,10 @@ const options = {
   origin: [
     'http://localhost:3000',
     'http://localhost:3006',
-    'https://russiantravel.nomoredomains.rocks',
-    'https://api.russiantravel.nomoredomains.rocks',
-    'http://russiantravel.nomoredomains.rocks',
-    'http://api.russiantravel.nomoredomains.rocks',
+    'https://almostkinopoisk.nomoredomains.rocks',
+    'https://api.almostkinopoisk.nomoredomains.rocks',
+    'http://almostkinopoisk.nomoredomains.rocks',
+    'http://api.almostkinopoisk.nomoredomains.rocks',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
