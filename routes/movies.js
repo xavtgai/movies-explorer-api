@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { validateMovie, validateMovieId } = require('../middlewares/validation');
+const { validateMovie } = require('../middlewares/validation');
 
 const {
   createMovie,
@@ -9,6 +9,8 @@ const {
 
 router.get('/', getMovies);
 router.post('/', validateMovie, createMovie);
-router.delete('/:id', validateMovieId, deleteMovieById);
+//  поскольку мы пока не знаем в каком формате будет приходить movieID c внешнего API,
+//  то валидация айди пока не производится
+router.delete('/:id', deleteMovieById);
 
 module.exports = router;
