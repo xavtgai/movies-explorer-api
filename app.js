@@ -21,8 +21,8 @@ const { validateSignIn, validateSignUp } = require('./middlewares/validation');
 
 const options = {
   origin: [
-    'http://localhost:3000',
-    'http://localhost:3006',
+    'http://localhost:3001',
+    'http://localhost:3005',
     'https://almostkinopoisk.nomoredomains.rocks',
     'https://api.almostkinopoisk.nomoredomains.rocks',
     'http://almostkinopoisk.nomoredomains.rocks',
