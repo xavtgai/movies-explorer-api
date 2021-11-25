@@ -55,6 +55,7 @@ module.exports.deleteMovieById = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
+        console.log(err);
         throw new BadRequestError();
       } else {
         next(err);
