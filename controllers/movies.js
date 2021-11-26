@@ -51,7 +51,7 @@ module.exports.deleteMovieById = (req, res, next) => {
         .catch(next);
     })
     .then((movie) => {
-      res.send({ message: `Карточка фильма "${movie.name}" удалена` });
+      res.send({ message: `Карточка фильма "${movie.nameRU}" удалена` });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
