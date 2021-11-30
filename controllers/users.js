@@ -18,7 +18,7 @@ module.exports.getMyData = (req, res, next) => {
   User.findById(req.user._id)
     .then((data) => {
       if (!data) { throw new NotFoundError(messages.notFound); }
-      return res.send({ data }.data);
+      return res.send({ data });
     })
     .catch(next);
 };
@@ -40,7 +40,6 @@ module.exports.createUser = (req, res, next) => {
       },
     }))
     .catch((err) => {
-      console.log(err);
       if (err.name === 'MongoServerError' && err.code === statusCodes.mongo) { throw new ConflictError(); }
       if (err.name === 'ValidationError') {
         throw new BadRequestError();
@@ -60,9 +59,13 @@ module.exports.updateUser = (req, res, next) => {
       return res.send({ data });
     })
     .catch((err) => {
+      if (err.name === 'MongoServerError' && err.code === statusCodes.mongo) {
+        throw new ConflictError();
+      }
       if (err.name === 'CastError' || err.name === 'ValidationError') {
         throw new BadRequestError();
       }
+
       next(err);
     })
     .catch(next);
@@ -82,10 +85,10 @@ module.exports.login = (req, res, next) => {
           httpOnly: true,
           sameSite: true,
         })
-        .send({ message: 'you are logged in' });
+        .send({ message: 'вход успешно выполнен' });
     })
     .catch(() => {
-      throw new UnauthorizedError('Authorization needed');
+      throw new UnauthorizedError('Неправильная почта или пароль');
     })
     .catch(next);
 };

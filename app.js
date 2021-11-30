@@ -10,14 +10,10 @@ const app = express();
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const rateLimiter = require('./middlewares/ratelimit');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const auth = require('./middlewares/auth');
+
 const { statusCodes, messages } = require('./middlewares/errors');
-
-const { NotFoundError } = require('./errors/notfound-err');
-
-const { login, createUser, logout } = require('./controllers/users');
-const { validateSignIn, validateSignUp } = require('./middlewares/validation');
 
 const options = {
   origin: [
@@ -34,31 +30,19 @@ const options = {
   allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
   credentials: true,
 };
-app.use('*', cors(options));
+app.options('*', cors(options));
 
+app.use(rateLimiter);
 app.use(express.json());
 app.use(cookieParser());
 
 app.use(requestLogger);
 
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-});
-
-app.post('/signin', validateSignIn, login);
-app.post('/signup', validateSignUp, createUser);
-app.post('/signout', logout);
-
-app.use('/movies', auth, require('./routes/movies'));
-app.use('/users', auth, require('./routes/users'));
-
-app.use('*', auth, () => { throw new NotFoundError('Объект не найден'); });
+app.use('/', require('./routes'));
 
 app.use(errorLogger);
 
-mongoose.connect('mongodb://localhost:27017/kinodb', {
+mongoose.connect('mongodb://localhost:27017/moviesdb', {
 
   useNewUrlParser: true,
   // , useCreateIndex: true,

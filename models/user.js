@@ -8,7 +8,6 @@ const validator = require('validator');
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    default: 'Жугдэрдэмэдийн Гуррагчаа',
     minlength: 2,
     maxlength: 30,
     required: true,

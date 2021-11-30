@@ -36,7 +36,6 @@ module.exports.createMovie = (req, res, next) => {
 
 module.exports.deleteMovieById = (req, res, next) => {
   const userId = req.user._id;
-
   Movie.findById(req.params.id)
     .then((movie) => {
       if (!movie) {
@@ -47,11 +46,11 @@ module.exports.deleteMovieById = (req, res, next) => {
         return;
       }
       movie.deleteOne()
-        .then(() => res.send({ data: movie }))
+        .then(() => res.send({ message: 'удаляю' }))
         .catch(next);
     })
-    .then((movie) => {
-      res.send({ message: `Карточка фильма "${movie.nameRU}" удалена` });
+    .then(() => {
+      res.send({ message: 'Карточка фильма удалена' });
     })
     .catch((err) => {
       if (err.name === 'CastError') {

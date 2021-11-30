@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 const validator = require('validator');
 
+const { messages } = require('../middlewares/errors');
+
 const movieSchema = new mongoose.Schema({
   nameRU: {
     type: String,
@@ -38,7 +40,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
   },
   movieId: {
-    type: String,
+    type: Number,
     required: true,
   },
   image: {
@@ -48,7 +50,7 @@ const movieSchema = new mongoose.Schema({
       validator: (image) => {
         validator.isURL(image, { protocols: ['http', 'https'], require_protocol: true });
       },
-      message: 'Некорректный формат ссылки',
+      message: messages.badUrl,
     },
   },
   trailer: {
@@ -58,7 +60,7 @@ const movieSchema = new mongoose.Schema({
       validator: (trailer) => {
         validator.isURL(trailer, { protocols: ['http', 'https'], require_protocol: true });
       },
-      message: 'Некорректный формат ссылки',
+      message: messages.badUrl,
     },
   },
   thumbnail: {
@@ -68,7 +70,7 @@ const movieSchema = new mongoose.Schema({
       validator: (thumbnail) => {
         validator.isURL(thumbnail, { protocols: ['http', 'https'], require_protocol: true });
       },
-      message: 'Некорректный формат ссылки',
+      message: messages.badUrl,
     },
   },
 

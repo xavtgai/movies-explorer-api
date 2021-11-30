@@ -16,6 +16,8 @@ const messages = {
   notFound: 'Объект или страница не найдены',
   conflict: 'В базе уже есть такая запись',
   server: 'Ошибка на стороне сервера',
+  badUrl: 'Некорректный формат ссылки',
+  rpsOverlimit: 'Вы превысили лимит на число запросов (1 запрос в секунду)',
 };
 
 class ServerError extends Error {

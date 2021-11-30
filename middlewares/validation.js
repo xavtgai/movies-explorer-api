@@ -1,7 +1,7 @@
 const { Joi, celebrate, CelebrateError } = require('celebrate');
 const { isURL } = require('validator');
 
-const validateUrl = Joi.string().custom((v) => {
+const validateUrl = Joi.string().required().custom((v) => {
   if (!isURL(v, { require_protocol: true })) {
     throw new CelebrateError('неправильный формат ссылки');
   }
@@ -20,7 +20,7 @@ const validateMovie = celebrate({
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
     thumbnail: validateUrl,
-    movieId: Joi.string().required(),
+    movieId: Joi.number().required(),
   }),
 });
 
@@ -47,7 +47,7 @@ const validateSignUp = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required().min(8),
-    name: Joi.string().min(2).max(30),
+    name: Joi.string().required().min(2).max(30),
   }),
 });
 
