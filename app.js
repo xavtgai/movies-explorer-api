@@ -26,10 +26,10 @@ const options = {
     'http://almostkinopoisk.nomoredomains.rocks',
     'http://api.almostkinopoisk.nomoredomains.rocks',
   ],
-  // methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-  // preflightContinue: false,
-  // optionsSuccessStatus: 204,
-  // allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
   credentials: true,
 };
 //  app.options('*', cors(options));
