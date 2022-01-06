@@ -5,6 +5,6 @@ const { login, createUser, logout } = require('../controllers/users');
 
 router.post('/signin', validateSignIn, login);
 router.post('/signup', validateSignUp, createUser);
-router.post('/signout', logout);
+router.get('/signout', logout);
 
 module.exports = router;

@@ -28,6 +28,13 @@ const userSchema = new mongoose.Schema({
     minlength: 8,
     select: false,
   },
+  //  кладем каждому пользователю список лайкнутых им фильмов
+  likedFilms: [{
+    type: Number,
+    required: true,
+    ref: 'movieId',
+    default: [],
+  }],
 });
 
 const rejectIncorrectData = () => Promise.reject(new Error('Неправильные почта или пароль'));
