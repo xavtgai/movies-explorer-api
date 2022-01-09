@@ -3,14 +3,21 @@ const { validateMovie, validateMovieId } = require('../middlewares/validation');
 
 const {
   createMovie,
-  deleteMovieById,
+  // deleteMovieById,
   getMovies,
 } = require('../controllers/movies');
 
+const {
+  likeCard,
+  dislikeCard,
+} = require('../controllers/users');
+
 router.get('/', getMovies);
 router.post('/', validateMovie, createMovie);
-//  поскольку мы пока не знаем в каком формате будет приходить movieID c внешнего API,
-//  то валидация айди пока не производится
-router.delete('/:id', validateMovieId, deleteMovieById);
+
+// router.delete('/:id', validateMovieId, deleteMovieById);
+
+router.put('/:id/likes', validateMovieId, likeCard);
+router.delete('/:id/likes', validateMovieId, dislikeCard);
 
 module.exports = router;

@@ -29,13 +29,14 @@ module.exports.createUser = (req, res, next) => {
   } = req.body;
   bcrypt.hash(password, 12)
     .then((hash) => User.create({
-      name, email, password: hash,
+      name, email, password: hash, likedFilms: [],
     }))
   // eslint-disable-next-line no-shadow
     .then((user) => res.send({
       data: {
         name: user.name,
         email: user.email,
+        likedFilms: user.likedFilms,
         _id: user._id,
       },
     }))
@@ -99,3 +100,43 @@ module.exports.logout = (_req, res) => {
     sameSite: 'none',
   }).send({ message: 'Выход осуществлен' });
 };
+
+module.exports.likeCard = (req, res, next) => User.findByIdAndUpdate(
+  req.user._id,
+  { $addToSet: { likedFilms: req.params.id } },
+  { new: true },
+)
+  .then((card) => {
+    if (!card) {
+      throw new NotFoundError();
+    }
+    return res.send(card);
+  })
+  .catch((err) => {
+    if (err.name === 'CastError') {
+      //  tmp
+      console.log(err);
+      throw new BadRequestError();
+    }
+    next(err);
+  })
+  .catch(next);
+
+module.exports.dislikeCard = (req, res, next) => User.findByIdAndUpdate(
+  req.user._id,
+  { $pull: { likedFilms: req.params.id } }, // убрать id из массива
+  { new: true },
+)
+  .then((card) => {
+    if (!card) {
+      throw new NotFoundError();
+    }
+    return res.send(card);
+  })
+  .catch((err) => {
+    if (err.name === 'CastError') {
+      throw new BadRequestError();
+    }
+    next(err);
+  })
+  .catch(next);

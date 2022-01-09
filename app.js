@@ -15,10 +15,12 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { statusCodes, messages } = require('./middlewares/errors');
 
+app.use(rateLimiter);
+
 const options = {
   origin: [
     'http://localhost:3001',
-    'http://localhost:3005',
+    'http://localhost:3000',
     'https://almostkinopoisk.nomoredomains.rocks',
     'https://api.almostkinopoisk.nomoredomains.rocks',
     'http://almostkinopoisk.nomoredomains.rocks',
@@ -30,9 +32,9 @@ const options = {
   allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
   credentials: true,
 };
-app.options('*', cors(options));
+//  app.options('*', cors(options));
+app.use('*', cors(options));
 
-app.use(rateLimiter);
 app.use(express.json());
 app.use(cookieParser());
 
